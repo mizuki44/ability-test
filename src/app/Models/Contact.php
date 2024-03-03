@@ -12,10 +12,16 @@ class Contact extends Model
     use HasFactory;
     protected $fillable = [
         'category_id',
-        'name',
+        'first_name',
+        'last_name',
+        'gender',
         'email',
         'tel',
-        'content'
+        'address',
+        'building',
+        'detail',
+        'created_at',
+        'updated_at',
      ];
 
 
@@ -24,7 +30,7 @@ class Contact extends Model
   return $this->belongsTo(Category::class);
 }
 
-     public function scopeSearch($query, $category_id)
+     public function scopeCategorySearch($query, $category_id)
 {
   if (!empty($category_id)) {
     $query->where('category_id', $category_id);
@@ -34,7 +40,23 @@ class Contact extends Model
 public function scopeKeywordSearch($query, $keyword)
 {
   if (!empty($keyword)) {
-    $query->where('content', 'like', '%' . $keyword . '%');
+    $query->where('first_name', 'like', '%' . $keyword . '%');
+    $query->where('last_name', 'like', '%' . $keyword . '%');
+    $query->where('email', 'like', '%' . $keyword . '%');
+  }
+}
+
+ public function scopeGenderSearch($query, $gender)
+{
+  if (!empty($gender)) {
+    $query->where('gender', $gender);
+  }
+}
+
+public function scopeCreated_atSearch($query, $Created_at)
+{
+  if (!empty($Created_at)) {
+    $query->where('Created_at', $Created_at);
   }
 }
 }

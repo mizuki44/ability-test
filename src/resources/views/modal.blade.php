@@ -1,0 +1,4 @@
+<div>
+    @livewire('modal')
+</div>
+    

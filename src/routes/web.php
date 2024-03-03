@@ -21,6 +21,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 use Laravel\Fortify\RoutePath;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ModalController;
 
 Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
     $enableViews = config('fortify.views', true);
@@ -40,11 +41,14 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
     Route::get('/', [ContactController::class, 'index']);
     Route::post('/contacts/confirm', [ContactController::class, 'confirm']);
     Route::post('/contact', [ContactController::class, 'store']);
-    Route::get('/admin', [ContactController::class, 'admin']);
-    // Route::middleware('auth')->group(function () {
-    //     Route::get('/admin', [ContactController::class, 'admin']);
-    // });
+    // Route::get('/admin', [ContactController::class, 'admin']);
+    Route::post('/thanks', [ContactController::class, 'store']);
     Route::get('/admin/search', [ContactController::class, 'search']);
+    Route::get('/modal', [ModalController::class, 'modal']);
+    Route::middleware('auth')->group(function () {
+    Route::get('/admin', [ContactController::class, 'admin']);
+    });
+
     # ルーティング追記 END
 
     Route::post(RoutePath::for('login', '/login'), [AuthenticatedSessionController::class, 'store'])

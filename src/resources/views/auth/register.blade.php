@@ -10,7 +10,7 @@
     <h2>会員登録</h2>
   </div>
   <form class="form" action="/register" method="post">
-    @csrf
+     @csrf
     <div class="form__group">
       <div class="form__group-title">
         <span class="form__label--item">お名前</span>

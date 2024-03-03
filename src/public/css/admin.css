@@ -28,7 +28,10 @@
     width: 70%;
 }
 
-
+.text_box {
+    display: flex;
+    justify-self: flex-start;
+}
 
     .create-form,
     .search-form {

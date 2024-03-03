@@ -16,46 +16,54 @@
 </div>
 <div class="todo__content">
 <div class="section__title">
-<h2>新規作成</h2>
-var_dump('test');
+<h2>Admin</h2>
 </div>
-<form class="create-form" action="/" method="post">
-    @csrf
-    <div class="create-form__item">
-    <input
-        class="create-form__item-input"
-        type="text"
-        name="content"
-    value="{{ old('content') }}"
-    />
-    <select class="create-form__item-select">
-    <option value="">カテゴリ</option>
-    </select>
-    </div>
-    <div class="create-form__button">
-    <button class="create-form__button-submit" type="submit">作成</button>
-    </div>
-</form>
-<div class="section__title">
-<h2>Todo検索</h2>
-</div>
-<form class="search-form">
+<form class="search-form" action="/admin/search" method="get">
 <div class="search-form__item">
-    <input class="search-form__item-input" type="text" />
+    <input class="search-form__item-input" type="text" placeholder="名前やメールアドレスを入力してください"/>
+</div>
+<div class="search-form__item">
+    <select class="search-form__item-select" name="gender">
+              <option value="" selected="selected" >性別</option>
+                 <option value="1">男性</option>
+                 <option value="2">女性</option>
+                 <option value="3">その他</option>
+    <!-- <input class="search-form__item-input" type="text" />
     <select class="search-form__item-select">
-    <option value="">カテゴリ</option>
+    <option value="">性別</option> -->
     </select>
 </div>
+<div class="search-form__item">
+     <select class="create-form__item-select" name="category_id">
+              <option value="" selected="selected" >お問い合わせの種類</option>
+             @foreach ($categories as $category)
+                 <option value="{{ $category['id'] }}">{{ $category['content'] }}</option>
+             @endforeach
+          </select>
+</div>
+<div class="search-form__item">
+    <input class="search-form__item-input" type="date" />
+</div>
+
 <div class="search-form__button">
     <button class="search-form__button-submit" type="submit">検索</button>
+</div>
+<div class="search-form__button">
+    <button class="search-form__button-submit">
+        <a href="{{ url('admin') }}">削除</a>
+    </button>
 </div>
 </form>
 <div class="todo-table">
     <table class="todo-table__inner">
     <tr class="todo-table__row">
     <th class="todo-table__header">
-        <span class="todo-table__header-span">Todo</span>
-        <span class="todo-table__header-span">カテゴリ</span> 
+        <div class="text_box">
+        <span class="todo-table__header-span">名前</span>
+        <span class="todo-table__header-span">性別</span> 
+        <span class="todo-table__header-span">メールアドレス</span>
+        <span class="todo-table__header-span">お問い合わせの種類</span>
+        </div>
     </th>
     </tr>
     @foreach ($contacts as $contact)
@@ -74,12 +82,13 @@ var_dump('test');
             </div>
 
 <div class="update-form__item">
-            <input
-                class="update-form__item-input"
-                type="text"
-                name="gender"
-                value="{{ $contact['gender'] }}"
-            />
+            @if ($contact['gender'] == 1)
+                <p>男性</p>
+            @elseif ($contact['gender'] == 2)
+              <p>女性</p>
+            @else
+              <p>その他</p>
+            @endif
             <input type="hidden" name="gender" value="{{ $contact['gender'] }}" />
             </div>
 
@@ -106,19 +115,13 @@ var_dump('test');
         <div class="update-form__item">
             <p class="update-form__itme-p">{{ $contact['category']['content'] }}</p>
         </div>
-            <div class="update-form__button">
-            <button class="update-form__button-submit" type="submit">
-                更新
-            </button>
-            </div>
         </form>
         </td>
         <td class="todo-table__item">
-        <form class="delete-form" action="/" method="post">
-            @method('DELETE') @csrf
+        <form class="delete-form" action="/modal" method="get">
             <div class="delete-form__button">
             <button class="delete-form__button-submit" type="submit">
-                削除
+                詳細
             </button>
             </div>
         </form>
@@ -128,4 +131,5 @@ var_dump('test');
     </table>
 </div>
 </div>
+{{ $contacts->links() }}
 @endsection

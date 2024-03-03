@@ -47,4 +47,5 @@ class CategoriesTableSeeder extends Seeder
 
     DB::table('categories')->insert($param);
     }
+    
 }
