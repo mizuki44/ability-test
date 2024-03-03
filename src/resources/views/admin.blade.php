@@ -28,9 +28,6 @@
                  <option value="1">男性</option>
                  <option value="2">女性</option>
                  <option value="3">その他</option>
-    <!-- <input class="search-form__item-input" type="text" />
-    <select class="search-form__item-select">
-    <option value="">性別</option> -->
     </select>
 </div>
 <div class="search-form__item">
@@ -75,11 +72,22 @@
             <input
                 class="update-form__item-input"
                 type="text"
-                name="name"
-                value="{{ $contact['name'] }}"
+                name="first_name"
+                value="{{ $contact['first_name'] }}"
             />
-            <input type="hidden" name="id" value="{{ $contact['name'] }}" />
+            <input type="hidden" name="id" value="{{ $contact['first_name'] }}" />
             </div>
+
+            <div class="update-form__item">
+            <input
+                class="update-form__item-input"
+                type="text"
+                name="last_name"
+                value="{{ $contact['last_name'] }}"
+            />
+            <input type="hidden" name="id" value="{{ $contact['last_name'] }}" />
+            </div>
+
 
 <div class="update-form__item">
             @if ($contact['gender'] == 1)

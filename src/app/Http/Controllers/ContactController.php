@@ -11,7 +11,7 @@ use App\Models\Category;
 
 class ContactController extends Controller
 {
-    public function index()
+  public function index()
   {
   $categories = Category::all();
     return view('index', compact('categories'));
@@ -26,21 +26,21 @@ class ContactController extends Controller
 
 public function store(ContactRequest $request)
 {
-     $contact = $request->only(['category_id','first_name','last_name', 'gender' ,'email', 'tel', 'address','building','detail']);
-     Contact::create($contact);
-     return view('thanks');
+    $contact = $request->only(['category_id','first_name','last_name', 'gender' ,'email', 'tel', 'address','building','detail']);
+    Contact::create($contact);
+    return view('thanks');
 }
 
 public function admin()
 {
     $contacts = Contact::with('category')->simplePaginate(7);
-  $categories = Category::all();
-  return view('admin', compact('contacts','categories'));
-  }
+    $categories = Category::all();
+    return view('admin', compact('contacts','categories'));
+}
 
- public function search(Request $request)
+public function search(Request $request)
 {
-  $contacts = Contact::with('category')->CategorySearch($request->category_id)->KeywordSearch($request->keyword)->GenderSearch($request->gender)->Created_atSearch($request->created_at)->get();
+  $contacts = Contact::with('category')->CategorySearch($request->category_id)->KeywordSearch($request->keyword)->GenderSearch($request->gender)->Created_atSearch($request->created_at)->simplePaginate(7);
   $categories = Category::all();
 
   return view('admin', compact('contacts', 'categories'));
